@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import BlueBtn from './utils/BlueBtn';
 
 function Header() {
   return (
@@ -38,23 +39,7 @@ function Header() {
         </ul>
 
         {/* div as button */}
-        <a href="#">
-          <div className=' ml-10 flex w-[143px] h-[58px] bg-[#070750] justify-center items-center rounded-[8px]'>
-            <div className='text-white text-[19px] justify-center '>
-              Sign up
-            </div>
-
-            
-
-            <Image
-              src="Images/arrow.svg"
-              width={24}
-              height={24}
-              alt="image of right arrow"
-            />
-          </div>
-        </a>
-
+        <BlueBtn text="Sign up" />
       </div>
     </nav>
   )
