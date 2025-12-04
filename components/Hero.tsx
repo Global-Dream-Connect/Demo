@@ -12,7 +12,7 @@ export default function Hero() {
 
         <div className='w-full max-w-lg flex-1 flex flex-col items-center gap-4 p-4 md:w-1/2 md:max-w-none lg:px-12 md:gap-8'>
           <div className='w-fit h-fit flex gap-2 bg-neutral-100 rounded-full py-2.5 px-4 text-slate-600 md:mr-auto'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe-icon lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
             <span>Global Dream Connect</span>
           </div>
 
@@ -54,7 +54,7 @@ export default function Hero() {
 }
 
 
-function HeroStat({number,title,color}){
+function HeroStat({number, title, color}){
   return(
     <>
       <div className={cn('w-fit h-fit flex flex-col gap-2',color)}>
