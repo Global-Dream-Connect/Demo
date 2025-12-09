@@ -12,7 +12,7 @@ function Header() {
   };
 
   return (
-    <nav className='py-[16px] px-[8px] md:px-4 flex flex-wrap justify-between items-center'>
+    <nav className='py-4 px-2 md:px-4 flex flex-wrap justify-between items-center'>
 
       {/* Logo */}
       <div className='flex ml-4 md:ml-10 lg:ml-20 w-full md:w-auto justify-between md:justify-start'>
@@ -28,11 +28,11 @@ function Header() {
           </div>
 
           <div className='flex flex-col ml-2 md:ml-3'>
-            <div className='text-[18px] md:text-[20px] lg:text-[24px] text-[#070750] font-[700] pt-1 md:pt-2'>
+            <div className='text-[18px] md:text-[20px] lg:text-[24px] text-[#070750] font-bold pt-1 md:pt-2'>
               Global Dreams Connect
             </div>
 
-            <div className='text-[12px] md:text-[13px] lg:text-[14px] pl-[1px] mt-[-5px] text-[#767676]'>
+            <div className='text-[12px] md:text-[13px] lg:text-[14px] pl-px mt-[-5px] text-[#767676]'>
               Fresh Minds, Global Futures...
             </div>
           </div>
@@ -61,7 +61,7 @@ function Header() {
         </ul>
 
         <div className='mt-4 md:mt-0 md:ml-6 lg:ml-8 w-full md:w-auto'>
-          <BlueBtn text="Sign up" className='w-full md:w-auto' />
+          <BlueBtn text="Sign up"  />
         </div>
       </div>
 
@@ -77,7 +77,7 @@ function Header() {
           </ul>
 
           <div className='mt-6 w-full flex justify-center'>
-            <BlueBtn text="Sign up" className='w-full max-w-[200px]' />
+            <BlueBtn text="Sign up"  />
           </div>
         </div>
       )}

@@ -30,6 +30,7 @@ async function copyToClipboard(text:string) {
     
     const successful = document.execCommand('copy');
     document.body.removeChild(textArea);
+    console.log(err)
     return successful;
   }
 }
@@ -87,7 +88,7 @@ export default function Footer() {
   )
 }
 
-function Links ({link}){
+function Links ({link}:{link:{href:string,link:string}}){
   
   return(
     <>
