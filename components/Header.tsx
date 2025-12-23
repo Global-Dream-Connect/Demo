@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import BlueBtn from './utils/BlueBtn';
+import Link from 'next/link';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,11 +54,11 @@ function Header() {
       {/* Desktop Menu - Always visible on md and above */}
       <div className='hidden md:flex flex-wrap md:mr-10 lg:mr-20 items-center w-full md:w-auto mt-4 md:mt-0'>
         <ul className='flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-10 text-[#A1A1A1] text-[14px] md:text-[15px] items-center w-full md:w-auto'>
-          <li><a href="#" className='hover:text-[#070750] transition-colors'>Home</a></li>
-          <li><a href="#" className='hover:text-[#070750] transition-colors'>Resources</a></li>
-          <li><a href="#" className='hover:text-[#070750] transition-colors'>Fellowship</a></li>
-          <li><a href="#" className='hover:text-[#070750] transition-colors'>How it works</a></li>
-          <li><a href="#" className='hover:text-[#070750] transition-colors'>Become a mentor</a></li>
+          <li><Link href="/" className='hover:text-[#070750] transition-colors'>Home</Link></li>
+          <li><Link href="#" className='hover:text-[#070750] transition-colors'>Resources</Link></li>
+          <li><Link href="/fellowships" className='hover:text-[#070750] transition-colors'>Fellowship</Link></li>
+          <li><Link href="#" className='hover:text-[#070750] transition-colors'>How it works</Link></li>
+          <li><Link href="#" className='hover:text-[#070750] transition-colors'>Become a mentor</Link></li>
         </ul>
 
         <div className='mt-4 md:mt-0 md:ml-6 lg:ml-8 w-full md:w-auto'>
