@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Mail, Linkedin, Instagram, ArrowUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 export default function Footer() {
@@ -35,32 +34,32 @@ export default function Footer() {
 
           {/* Center: Navigation Links */}
           <div className="space-y-6">
-            <h3 className="text-lg font-medium">Information</h3>
+            <h3 className=" text-lg font-medium">Information</h3>
             <ul className="space-y-3 text-sm text-gray-300">
               <li>
-                <Link href="/about" className="hover:text-white transition">
+                <Link href="/about" className=" hover:text-white transition">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/faqs" className="hover:text-white transition">
+                <Link href="/faqs" className=" hover:text-white transition">
                   FAQs
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-white transition">
+                <Link href="/contact" className=" hover:text-white transition">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <Button
-                  variant="link"
-                  className="p-0 h-auto text-sm text-gray-300 hover:text-white"
+                <Link
+                  href={"#"}
+                  className="flex items-center gap-1 px-0 p-0 h-auto text-sm text-gray-300 hover:text-white"
                   onClick={scrollToTop}
                 >
                   Back to top
                   <ArrowUp className="ml-2 h-4 w-4" />
-                </Button>
+                </Link>
               </li>
             </ul>
           </div>
