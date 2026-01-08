@@ -11,7 +11,7 @@ import {
   SheetClose,
 } from '@/components/ui/sheet';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation'; // ← Add this import
+import { usePathname } from 'next/navigation'; 
 
 const Navbar = () => {
   const pathname = usePathname(); // ← Gets current URL path
