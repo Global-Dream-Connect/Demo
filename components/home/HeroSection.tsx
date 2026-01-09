@@ -34,7 +34,7 @@ export default function HeroSection() {
                         </p>
 
                         {/* CTA Button */}
-                        <Button size="lg" className="bg-[#070750] hover:bg-indigo-700 text-white px-8 py-6 text-lg">
+                        <Button size="lg" className="bg-[#070750] hover:bg-[#070750e6] text-white px-8 py-6 text-lg">
                             Start your journey now
                             <span className="ml-2">→</span>
                         </Button>

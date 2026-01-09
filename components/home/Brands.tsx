@@ -34,11 +34,11 @@ export default function Brands() {
             logo: "/Images/brand/dartmouth-seeklogo.png",
         },
         {
-            name: "Dartmouth College",
+            name: "Dartmouth Collegee",
             logo: "/Images/brand/dartmouth-seeklogo.png",
         },
         {
-            name: "Dartmouth College",
+            name: "Dartmouth Collegeee",
             logo: "/Images/brand/dartmouth-seeklogo.png",
         },
     ];
