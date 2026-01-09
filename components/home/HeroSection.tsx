@@ -6,9 +6,9 @@ import { Users, UserCheck, Globe } from 'lucide-react';
 
 export default function HeroSection() {
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[80%] flex items-center justify-center overflow-hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div className="container relative z-10 mx-auto px-6 py-5">
+            <div className="container relative z-10 mx-auto px-2 py-5">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {/* Left: Text Content */}
                     <div className="space-y-8 text-center lg:text-left">
