@@ -8,6 +8,7 @@ import DreamsBecomingReality from "@/components/home/DreamsBecomingReality";
 import FreeResources from "@/components/home/FreeResources";
 import HeroSection from "@/components/home/HeroSection";
 import HowItWorks from "@/components/home/HowItWorks";
+import SuccessStories from "@/components/home/SuccessStories";
 
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
       <HowItWorks/>
       <FreeResources/>
       <DreamsBecomingReality/>
+      <SuccessStories/>
       <BecomeAMentor/>
       <CallToAction/>
       <Footer />
