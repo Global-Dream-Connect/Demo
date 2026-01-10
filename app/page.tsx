@@ -23,7 +23,7 @@ export default function Home() {
       <Brands />
       <HowItWorks/>
       <FreeResources/>
-      <DreamsBecomingReality/>
+      {/* <DreamsBecomingReality/> */}
       <SuccessStories/>
       <BecomeAMentor/>
       <CallToAction/>

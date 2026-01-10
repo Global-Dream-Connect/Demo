@@ -6,6 +6,7 @@ import Navbar2 from '@/components/fellowship/Navbar2';
 import ResourceBanner from '@/components/fellowship/ResourceBanner';
 import RhodesScholar from '@/components/fellowship/RhodesScholar';
 import SuccessStories from '@/components/fellowship/SuccessStories';
+import SuccessStoriesStatic from '@/components/fellowship/SuccessStoriesStatic';
 
 
 const Fellowships = () => {
@@ -18,7 +19,8 @@ const Fellowships = () => {
         <div className='container mx-auto px-2'>
 
             <FellowshipFilters/>
-            <SuccessStories/>
+            {/* <SuccessStories/> */}
+            <SuccessStoriesStatic/>
             <RhodesScholar/>
             <ResourceBanner/>
 
