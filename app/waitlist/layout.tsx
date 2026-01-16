@@ -13,7 +13,6 @@ const WaitlistLayout = () => {
                 <div className='col-span-12 md:col-span-5'>
                     <JoinWaitlist />
                 </div>
-
             </div>
             <WaitlistFooter />
         </div>
@@ -21,3 +20,4 @@ const WaitlistLayout = () => {
 };
 
 export default WaitlistLayout;
+

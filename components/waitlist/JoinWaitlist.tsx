@@ -18,6 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from "@/components/ui/select";
+import { useState } from "react";
+import WaitlistConfirmation from "./WaitlistConfirmation";
 
 const formSchema = z.object({
     fullName: z.string().min(2, "Full name is required"),
@@ -30,6 +32,9 @@ const formSchema = z.object({
 });
 
 export default function JoinWaitlist() {
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submittedName, setSubmittedName] = useState<string>("");
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -45,10 +50,36 @@ export default function JoinWaitlist() {
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         console.log(values);
+
+
+
+
+        // When success:
+        setSubmittedName(values.fullName);
+        setIsSubmitted(true);
+
+        // reset form
+        form.reset();
+
     };
 
+
+
+    if (isSubmitted) {
+        return (
+            <div className="w-full flex justify-center py-16 px-4">
+                <WaitlistConfirmation
+                    name={submittedName || "there"}
+                    referralCode={"GDC-XXXX"} // ← Please generate dynamically 
+                />
+            </div>
+        );
+    }
+
+
+
     return (
-        <div className="w-full flex justify-center py-16 px-4">
+        <div className="w-full flex justify-center py-16">
             <div className="w-full max-w-md bg-white shadow-md rounded-xl p-8 border border-gray-200">
                 <h2 className="text-2xl font-bold text-[#0A0A0A] mb-1">
                     Join the waitlist
@@ -217,12 +248,16 @@ export default function JoinWaitlist() {
                         </div>
 
                         {/* Submit Button */}
+
+                        {/* // Disable button when submitting */}
                         <Button
                             type="submit"
+                            disabled={form.formState.isSubmitting}
                             className="w-full bg-[#1E3A8A] hover:bg-[#1a3370] text-white py-5 text-base rounded-md"
                         >
-                            Join Waitlist →
+                            {form.formState.isSubmitting ? "Joining..." : "Join Waitlist →"}
                         </Button>
+
 
                         <p className="text-[12px] text-center text-gray-500 mt-1">
                             🔒 We respect your privacy. Unsubscribe anytime.
@@ -233,3 +268,27 @@ export default function JoinWaitlist() {
         </div>
     );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
