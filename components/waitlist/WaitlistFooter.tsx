@@ -1,6 +1,11 @@
 
 
 
+
+
+
+
+
 import { FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import Image from "next/image";
