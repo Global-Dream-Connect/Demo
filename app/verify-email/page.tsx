@@ -3,19 +3,23 @@
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Header from "@/components/Header";
+import AuthHeader from "@/components/auth/AuthHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import SignupShell from "@/components/auth/SignupShell";
+
 
 export default function VerifyEmailPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const name = searchParams.get("name") || "there";
+  const email = searchParams.get("email") || "";
 
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [timer, setTimer] = useState(50);
   const [verifying, setVerifying] = useState(false);
+  const [error, setError] = useState("");
 
   /* Countdown */
   useEffect(() => {
@@ -39,52 +43,56 @@ export default function VerifyEmailPage() {
     }
   };
 
-  /* Verify */
-  const handleVerify = () => {
-    if (otp.join("").length !== 6) return;
+  /* Verify OTP (API CALL) */
+  const handleVerify = async () => {
+    const code = otp.join("");
+
+    if (code.length !== 6) {
+      setError("Please enter the 6 digit code");
+      return;
+    }
 
     setVerifying(true);
+    setError("");
 
-    // 🔥 simulate API call
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/verify-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          otp: code,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Invalid OTP");
+        setVerifying(false);
+        return;
+      }
+
+      // ✅ Success
       router.push("/verify-success");
-    }, 2000);
+    } catch {
+      setError("Something went wrong");
+      setVerifying(false);
+    }
   };
 
   return (
     <div className="relative min-h-screen">
-      {/* BACKGROUND PAGE */}
-      <div className="min-h-screen flex flex-col">
-        <Header />
+  
+{/* BACKGROUND PAGE */}
+<div className="min-h-screen flex flex-col">
+  <AuthHeader />
+  <SignupShell />
+</div>
 
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2">
-          <div className="flex items-center justify-center px-6 lg:px-12">
-            <div className="w-full max-w-md space-y-6 opacity-60">
-              <span className="inline-block rounded-full bg-gray-100 px-4 py-1 text-sm">
-                Step 1/3
-              </span>
-              <h1 className="text-2xl font-semibold">
-                Let’s get you started
-              </h1>
-              <Input disabled placeholder="Enter your full name" />
-              <Input disabled placeholder="Enter your email address" />
-              <Input disabled placeholder="Enter a strong password" />
-              <Button disabled className="w-full">
-                Sign up with your e-mail
-              </Button>
-            </div>
-          </div>
 
-          <div className="hidden lg:block relative">
-            <Image
-              src="/Images/how-it-works.jpg"
-              alt="Mentorship"
-              fill
-              className="object-cover opacity-60"
-            />
-          </div>
-        </div>
-      </div>
 
       {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-black/60 z-10" />
@@ -101,7 +109,7 @@ export default function VerifyEmailPage() {
           </p>
 
           {/* OTP BOXES */}
-          <div className="flex justify-center gap-3 mb-6">
+          <div className="flex justify-center gap-3 mb-4">
             {otp.map((digit, index) => (
               <input
                 key={index}
@@ -117,6 +125,13 @@ export default function VerifyEmailPage() {
             ))}
           </div>
 
+          {/* ERROR */}
+          {error && (
+            <p className="text-sm text-red-600 mb-4">
+              {error}
+            </p>
+          )}
+
           {/* RESEND */}
           <p className="text-sm text-gray-500 mb-6">
             Resend code in{" "}
@@ -129,10 +144,10 @@ export default function VerifyEmailPage() {
           <Button
             onClick={handleVerify}
             disabled={verifying}
-            className={`w-full h-12 text-base transition ${
+            className={`w-full h-12 text-base ${
               verifying
                 ? "bg-indigo-300 cursor-not-allowed"
-                : ""
+                : "bg-[#070750] hover:bg-[#050540]"
             }`}
           >
             {verifying ? "Verifying..." : "Verify my mail"}

@@ -1,63 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import Header from "@/components/Header";
 import { CheckCircle } from "lucide-react";
+import AuthHeader from "@/components/auth/AuthHeader";
+import SignupShell from "@/components/auth/SignupShell";
 
 export default function VerifySuccessPage() {
   return (
     <div className="relative min-h-screen">
-      {/* BACKGROUND PAGE (same as signup) */}
+      {/* BACKGROUND PAGE (exact signup, disabled) */}
       <div className="min-h-screen flex flex-col">
-        <Header />
-
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2">
-          {/* Left */}
-          <div className="flex items-center justify-center px-6 lg:px-12">
-            <div className="w-full max-w-md space-y-6 opacity-60">
-              <span className="inline-block rounded-full bg-gray-100 px-4 py-1 text-sm">
-                Step 1/3
-              </span>
-
-              <h1 className="text-2xl font-semibold">
-                Let’s get you started
-              </h1>
-
-              <input
-                disabled
-                placeholder="Enter your full name"
-                className="w-full h-11 rounded-md border px-3"
-              />
-              <input
-                disabled
-                placeholder="Enter your email address"
-                className="w-full h-11 rounded-md border px-3"
-              />
-              <input
-                disabled
-                placeholder="Enter a strong password"
-                className="w-full h-11 rounded-md border px-3"
-              />
-
-              <button
-                disabled
-                className="w-full h-11 rounded-md bg-indigo-900 text-white"
-              >
-                Sign up with your e-mail
-              </button>
-            </div>
-          </div>
-
-          {/* Right image */}
-          <div className="hidden lg:block relative">
-            <Image
-              src="/Images/how-it-works.jpg"
-              alt="Mentorship"
-              fill
-              className="object-cover opacity-60"
-            />
-          </div>
-        </div>
+        <AuthHeader />
+        <SignupShell disabled />
       </div>
 
       {/* DARK OVERLAY */}

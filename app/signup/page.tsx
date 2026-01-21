@@ -5,14 +5,12 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import Header from "@/components/Header";
+import AuthHeader from "@/components/auth/AuthHeader";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 
 import {
@@ -44,18 +42,40 @@ export default function SignupPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof schema>) {
+  
+  async function onSubmit(values: z.infer<typeof schema>) {
+  try {
+    const res = await fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Signup failed");
+      return;
+    }
+
+    // move to next step only after API success
     router.push(
       `/verify-email?name=${encodeURIComponent(
         values.fullName
       )}&email=${encodeURIComponent(values.email)}`
     );
+  } catch (error) {
+    alert("Something went wrong");
   }
+}
+
 
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <Header />
+      <AuthHeader />
 
       {/* Main */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-2">
@@ -82,10 +102,7 @@ export default function SignupPage() {
                     <FormItem>
                       <FormLabel>Full Name</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Enter your full name"
-                          {...field}
-                        />
+                        <Input placeholder="Enter your full name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -128,7 +145,7 @@ export default function SignupPage() {
                   )}
                 />
 
-                <Button className="w-full h-11 text-base">
+                <Button className="w-full h-11 text-base bg-[#070750] hover:bg-[#050540]">
                   Sign up with your e-mail
                 </Button>
               </form>
@@ -143,7 +160,7 @@ export default function SignupPage() {
               <div className="h-px flex-1 bg-gray-200" />
             </div>
 
-            {/* Google Button */}
+            {/* Google */}
             <Button
               variant="outline"
               className="w-full h-11 flex items-center gap-3"
@@ -161,9 +178,10 @@ export default function SignupPage() {
 
         {/* RIGHT SLIDER */}
         <div className="hidden lg:flex items-center justify-center p-6">
-          <div className="w-full h-full rounded-2xl overflow-hidden">
+          <div className="w-full h-[520px] max-w-[520px] rounded-2xl overflow-hidden">
             <Carousel className="h-full">
               <CarouselContent>
+
                 {/* Slide 1 */}
                 <CarouselItem>
                   <div className="relative h-[520px]">
@@ -173,14 +191,25 @@ export default function SignupPage() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/40" />
-                    <div className="absolute bottom-8 left-8 text-white">
+
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+                    {/* Text */}
+                    <div className="absolute bottom-12 left-8 right-8 text-white">
                       <h2 className="text-2xl font-semibold">
                         Great Mentorship
                       </h2>
                       <p className="text-sm text-gray-200 max-w-sm">
                         Get help from seasoned mentors to help navigate your ivy league journey.
                       </p>
+                    </div>
+
+                    {/* Slider indicators */}
+                    <div className="absolute bottom-4 left-8 flex gap-2">
+                      <span className="h-1 w-10 rounded-full bg-white animate-slide" />
+                      <span className="h-1 w-6 rounded-full bg-white/40" />
+                      <span className="h-1 w-6 rounded-full bg-white/40" />
                     </div>
                   </div>
                 </CarouselItem>
@@ -194,8 +223,10 @@ export default function SignupPage() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/40" />
-                    <div className="absolute bottom-8 left-8 text-white">
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+                    <div className="absolute bottom-12 left-8 right-8 text-white">
                       <h2 className="text-2xl font-semibold">
                         Global Network
                       </h2>
@@ -203,12 +234,16 @@ export default function SignupPage() {
                         Connect with students and mentors across the globe.
                       </p>
                     </div>
+
+                    <div className="absolute bottom-4 left-8 flex gap-2">
+                      <span className="h-1 w-6 rounded-full bg-white/40" />
+                      <span className="h-1 w-10 rounded-full bg-white animate-slide" />
+                      <span className="h-1 w-6 rounded-full bg-white/40" />
+                    </div>
                   </div>
                 </CarouselItem>
-              </CarouselContent>
 
-              <CarouselPrevious />
-              <CarouselNext />
+              </CarouselContent>
             </Carousel>
           </div>
         </div>
