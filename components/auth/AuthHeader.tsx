@@ -29,7 +29,8 @@ function AuthHeader() {
 
       {/* Login CTA */}
       <div className="mr-4 md:mr-10 lg:mr-20">
-        <BlueBtn text="Log in to your account  " />
+      <BlueBtn text="Log in to your account" href="/login" />
+
       </div>
     </nav>
   );
