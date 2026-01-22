@@ -21,6 +21,33 @@ export default function VerifyEmailPage() {
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState("");
 
+ const handleResend = async () => {
+  try {
+    const res = await fetch("/api/resend-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!res.ok) {
+      setError("Failed to resend code");
+      return;
+    }
+
+    // reset state
+    setOtp(Array(6).fill(""));
+    setTimer(50); // triggers countdown again
+    setError("");
+
+    // optional UX polish
+    document.getElementById("otp-0")?.focus();
+  } catch {
+    setError("Something went wrong");
+  }
+};
+
+
+
   /* Countdown */
   useEffect(() => {
     if (timer === 0) return;
@@ -133,12 +160,25 @@ export default function VerifyEmailPage() {
           )}
 
           {/* RESEND */}
-          <p className="text-sm text-gray-500 mb-6">
-            Resend code in{" "}
-            <span className="text-indigo-600 font-medium">
-              {timer}s
-            </span>
-          </p>
+        <div className="mb-6 text-sm">
+  {timer > 0 ? (
+    <p className="text-gray-500">
+      Resend code in{" "}
+      <span className="text-indigo-600 font-medium">
+        {timer}s
+      </span>
+    </p>
+  ) : (
+    <button
+    type="button"
+      onClick={handleResend}
+      className="text-[#070750] font-medium hover:underline"
+    >
+      Resend code
+    </button>
+  )}
+</div>
+
 
           {/* VERIFY BUTTON */}
           <Button
