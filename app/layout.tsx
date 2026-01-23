@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 // install poppins font
 const poppins = Poppins({
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body
         className={`${poppins.className} antialiased`}
       >
+         <Toaster richColors position="top-center" />
         {children}
       </body>
     </html>
