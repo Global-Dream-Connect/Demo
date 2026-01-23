@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import AuthHeader from "@/components/auth/AuthHeader";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import SignupShell from "@/components/auth/SignupShell";
 
 
@@ -99,6 +98,7 @@ export default function VerifyEmailPage() {
       if (!res.ok) {
         setError(data.message || "Invalid OTP");
         setVerifying(false);
+        setOtp(Array(6).fill(""))
         return;
       }
 
