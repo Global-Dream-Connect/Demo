@@ -5,7 +5,13 @@ import Image from 'next/image';
 import BlueBtn from './utils/BlueBtn';
 import Link from 'next/link';
 
-function Header() {
+interface HeaderProps {
+  hideNavigation?: boolean;
+  buttonText?: string;
+  buttonHref?: string;
+}
+
+function Header({ hideNavigation = false, buttonText = "Sign up", buttonHref = "/signup" }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,7 +25,7 @@ function Header() {
       <div className='flex ml-4 md:ml-10 lg:ml-20 w-full md:w-auto justify-between md:justify-start'>
         <div className='flex'>
           <div>
-            <Image 
+            <Image
               src="Images/Logo.svg"
               alt="Company's blue G logo"
               width={60}
@@ -40,34 +46,38 @@ function Header() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className='md:hidden mr-4'>
-          <button 
-            onClick={toggleMenu}
-            className='text-[#070750] text-2xl focus:outline-none'
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {isMenuOpen ? '✕' : '☰'}
-          </button>
-        </div>
+        {!hideNavigation && (
+          <div className='md:hidden mr-4'>
+            <button
+              onClick={toggleMenu}
+              className='text-[#070750] text-2xl focus:outline-none'
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {isMenuOpen ? '✕' : '☰'}
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Desktop Menu - Always visible on md and above */}
+      {/* Desktop Menu - Always visible on md and above, unless cached */}
       <div className='hidden md:flex flex-wrap md:mr-10 lg:mr-20 items-center w-full md:w-auto mt-4 md:mt-0'>
-        <ul className='flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-10 text-[#A1A1A1] text-[14px] md:text-[15px] items-center w-full md:w-auto'>
-          <li><Link href="/" className='hover:text-[#070750] transition-colors'>Home</Link></li>
-          <li><Link href="#" className='hover:text-[#070750] transition-colors'>Resources</Link></li>
-          <li><Link href="/fellowships" className='hover:text-[#070750] transition-colors'>Fellowship</Link></li>
-          <li><Link href="#" className='hover:text-[#070750] transition-colors'>How it works</Link></li>
-          <li><Link href="#" className='hover:text-[#070750] transition-colors'>Become a mentor</Link></li>
-        </ul>
+        {!hideNavigation && (
+          <ul className='flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-10 text-[#A1A1A1] text-[14px] md:text-[15px] items-center w-full md:w-auto'>
+            <li><Link href="/" className='hover:text-[#070750] transition-colors'>Home</Link></li>
+            <li><Link href="#" className='hover:text-[#070750] transition-colors'>Resources</Link></li>
+            <li><Link href="/fellowships" className='hover:text-[#070750] transition-colors'>Fellowship</Link></li>
+            <li><Link href="#" className='hover:text-[#070750] transition-colors'>How it works</Link></li>
+            <li><Link href="#" className='hover:text-[#070750] transition-colors'>Become a mentor</Link></li>
+          </ul>
+        )}
 
         <div className='mt-4 md:mt-0 md:ml-6 lg:ml-8 w-full md:w-auto'>
-          <BlueBtn text="Sign up" className='w-full md:w-auto' />
+          <BlueBtn text={buttonText} className='w-full md:w-auto' href={buttonHref} />
         </div>
       </div>
 
-      {/* Mobile Menu - Only shows when isMenuOpen is true */}
-      {isMenuOpen && (
+      {/* Mobile Menu - Only shows when isMenuOpen is true AND navigation is allowed */}
+      {isMenuOpen && !hideNavigation && (
         <div className='md:hidden w-full mt-4 animate-fadeIn'>
           <ul className='flex flex-col gap-6 text-[#A1A1A1] text-[16px] items-center w-full'>
             <li><a href="#" className='hover:text-[#070750] transition-colors py-2'>Home</a></li>
@@ -78,7 +88,7 @@ function Header() {
           </ul>
 
           <div className='mt-6 w-full flex justify-center'>
-            <BlueBtn text="Sign up" className='w-full max-w-[200px]' />
+            <BlueBtn text={buttonText} className='w-full max-w-[200px]' href={buttonHref} />
           </div>
         </div>
       )}

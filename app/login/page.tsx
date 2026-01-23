@@ -7,45 +7,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, ArrowRight } from "lucide-react"
+import Header from "@/components/Header"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="w-full px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Logo Section */}
-          <div className="flex items-center gap-3">
-            <Image
-              src="/Images/Logo.svg"
-              alt="Global Dreams Connect Logo"
-              width={40}
-              height={40}
-              className="w-10 h-10"
-            />
-            <div>
-              <h1 className="text-xl font-bold text-[#070750]">Global Dreams Connect</h1>
-              <p className="text-sm text-gray-500">Fresh Minds, Global Futures...</p>
-            </div>
-          </div>
-          
-          {/* Create Account Button */}
-          <Button 
-            asChild
-            className="bg-[#070750] hover:bg-[#070750]/90 text-white rounded-md px-4 py-2 h-auto"
-          >
-            <Link href="/signup" className="flex items-center gap-2">
-              Create an account
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
-        </div>
-        
-        {/* Dotted Separator */}
-        <div className="max-w-7xl mx-auto mt-4 border-t-2 border-dotted border-blue-300"></div>
-      </header>
+      <Header hideNavigation={true} buttonText="Create an account" />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8">
@@ -53,7 +22,7 @@ export default function LoginPage() {
           {/* Left Column - Login Form */}
           <div className="bg-white rounded-lg shadow-sm p-8">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">Welcome back</h2>
-            
+
             {/* Email Input */}
             <div className="mb-6">
               <Label htmlFor="email" className="text-gray-700 mb-2 block">
@@ -145,19 +114,15 @@ export default function LoginPage() {
                 className="object-cover rounded-lg"
                 priority
               />
-              
+
               {/* Text Overlay - Bottom Left Corner */}
               <div className="absolute bottom-0 left-0 bg-black/60 p-8 rounded-br-lg">
                 <h3 className="text-3xl font-bold text-white mb-2">Great Mentorship</h3>
-                <p className="text-white text-base leading-relaxed max-w-md">
-                  Get help from seasoned mentors to help navigate your ivy league journey.
-                </p>
-                
-                {/* Navigation Dots */}
+                <p className="text-white text-base leading-relaxed max-w-md">Get help from seasoned mentors to help navigate your ivy league journey.</p>
                 <div className="flex gap-2 mt-6">
-                  <div className="w-8 h-2 bg-white rounded-full"></div>
-                  <div className="w-8 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
-                  <div className="w-8 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
+                  <div className="w-40 h-2 bg-white rounded-full"></div>
+                  <div className="w-30 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
+                  <div className="w-60 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
                 </div>
               </div>
             </div>
