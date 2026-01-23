@@ -119,3 +119,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes slideProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-slide {
+  animation: slideProgress 4s linear infinite;
+}
