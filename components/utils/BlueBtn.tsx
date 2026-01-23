@@ -27,4 +27,4 @@ function BlueBtn({ text, className = "", href = "#" }: BlueBtnProps) {
   )
 }
 
-export default BlueBtn
+export default BlueBtn;
