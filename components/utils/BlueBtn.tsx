@@ -1,28 +1,30 @@
-import Image from "next/image";
-import Link from "next/link";
+import Link from "next/link"
+import Image from "next/image"
 
-type BlueBtnProps = {
+interface BlueBtnProps {
   text: string;
+  className?: string;
   href?: string;
-};
+}
 
-function BlueBtn({ text, href = "#" }: BlueBtnProps) {
+function BlueBtn({ text, className = "", href = "#" }: BlueBtnProps) {
   return (
-    <Link href={href}>
-      <div className="ml-10 flex py-3 px-4 bg-[#070750] justify-center items-center rounded-[8px] cursor-pointer hover:bg-[#050540] transition">
-        <div className="text-white text-[16px] mr-2">
-          {text}
+    <Link href={href} className={className}>
+      <div className={`flex py-3 px-4 bg-[#070750] justify-center items-center rounded-[8px] ${className}`}>
+        <div className='text-white text-[19px] justify-center '>
+            {text}
         </div>
 
         <Image
           src="/Images/arrow.svg"
-          width={20}
-          height={20}
-          alt="right arrow"
+          width={24}
+          height={24}
+          alt="image of right arrow"
+          className="ml-2"
         />
       </div>
     </Link>
-  );
+  )
 }
 
 export default BlueBtn;
