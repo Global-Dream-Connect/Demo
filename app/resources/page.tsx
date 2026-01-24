@@ -5,7 +5,7 @@ import SignUpCTA from '@/components/resources/SignUpCTA';
 
 const Resources = () => {
   // Toggle this to true/false to switch views
-  const isLoggedIn = false; 
+  const isLoggedIn = true; 
 
   return (
     <div className="bg-white min-h-screen w-full overflow-x-hidden">
