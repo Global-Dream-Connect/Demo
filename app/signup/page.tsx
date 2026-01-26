@@ -4,7 +4,7 @@ import Image from "next/image";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import AuthHeader from "@/components/auth/AuthHeader";
 
 import {
@@ -32,6 +32,8 @@ const schema = z.object({
 
 export default function SignupPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl") || "/"
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -64,7 +66,7 @@ export default function SignupPage() {
     router.push(
       `/verify-email?name=${encodeURIComponent(
         values.fullName
-      )}&email=${encodeURIComponent(values.email)}`
+      )}&email=${encodeURIComponent(values.email)}&returnUrl=${encodeURIComponent(returnUrl)}`
     );
   } catch (error) {
     alert("Something went wrong");

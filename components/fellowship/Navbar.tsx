@@ -1,9 +1,6 @@
-
-
 'use client';
-
-import React, { useState } from 'react';
-import { CircleUser, Menu } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { CircleUser, Menu, LogOut, User as UserIcon, ChevronDown, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -13,10 +10,14 @@ import {
 } from '@/components/ui/sheet';
 import Image from 'next/image';
 import Link from 'next/link';               
-import { usePathname } from 'next/navigation'; 
+import { usePathname, useRouter } from 'next/navigation'; 
+import { useAuth } from '@/context/AuthContext';
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const pathname = usePathname(); // Get current path
+  const router = useRouter();
+  const { user, logout, isAuthenticated } = useAuth();
 
   const navLinks = [
     { label: 'Home', href: '/' },
@@ -27,57 +28,110 @@ const Navbar = () => {
   ];
 
   const [open, setOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    setUserMenuOpen(false);
+  };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo Section */}
-          <div className="flex items-center">
-            <Image
-              src="/Images/Logo.svg"
-              alt="Company's blue G logo"
-              width={60}
-              height={60}
-              className="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16"
-            />
-            <div className="ml-3">
-              <h1 className="text-2xl font-bold text-[#070750]">
-                Global Dreams Connect
-              </h1>
-              <p className="text-sm text-gray-600">
-                Fresh Minds, Global Futures...
-              </p>
+    <header className="sticky top-0 z-50 border-b border-gray-100 bg-white">
+      <div className="flex w-full items-center justify-between px-[6.25rem] py-[1.25rem] transition-all">
+        
+        {/* Logo Section */}
+        <Link href="/" className="flex items-center gap-3 group">
+            <div className="relative h-[3.75rem] w-[3.75rem] shrink-0">
+               <Image 
+                 src="/Images/Logo.svg" 
+                 alt="GDC Logo" 
+                 fill
+                 className="object-contain"
+               />
             </div>
-          </div>
-
+            <div className="flex flex-col">
+                <span className="text-[1.5rem] font-bold leading-tight text-[#070750]">
+                    Global Dreams Connect
+                </span>
+                <span className="text-[0.875rem] text-gray-500 font-medium">
+                    Fresh Minds, Global Futures...
+                </span>
+            </div>
+        </Link>
+          
+        <div className="flex items-center gap-[3rem]">
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={`font-medium transition-colors ${
-                    isActive
-                      ? 'text-[#111111] font-bold'  
-                      : 'text-[#A1A1A1] hover:text-[#111111]'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+          <nav className="hidden items-center xl:flex">
+            <ul className="flex items-center gap-[1rem]">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "text-[1rem] font-medium transition-colors hover:text-[#070750] p-[0.625rem]",
+                      pathname === link.href ? "font-semibold text-[#070750]" : "text-gray-500"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
 
           {/* Right side: User button + Mobile menu trigger */}
           <div className="flex items-center gap-4">
-            {/* User Profile Button */}
-            <Button variant="outline" className="rounded-xl border-gray-300 hidden sm:flex">
-              <CircleUser className="h-5 w-5 text-[#070750] mr-2" />
-              <span className="text-[#070750] font-medium">Oluwabukunmi</span>
-            </Button>
+            
+            {/* Desktop Auth State */}
+            <div className="hidden xl:flex items-center gap-4">
+              {isAuthenticated && user ? (
+                <div className="relative" ref={userMenuRef}>
+                   <Button 
+                    variant="outline" 
+                    className="rounded-[0.5rem] border-[#070750] flex items-center gap-[10px] h-[3.625rem] py-[1rem] px-[1.5rem]"
+                    onClick={handleLogout}
+                  >
+                    <Image src="/Images/icons/user_avatar.svg" alt='user avatar' width={20} height={20}/>
+                    <span className="text-[#070750] font-medium truncate">{user.name}</span>
+                  </Button>
+
+                </div>
+              ) : (
+                <div className="flex items-center gap-4">
+                    <Button
+                        asChild
+                        className="h-[3.625rem] w-[9rem] bg-[#070750] px-[1.5rem] py-[1.0625rem] text-[1rem] font-medium text-white hover:bg-[#070750]/90 rounded-[0.5rem] shadow-sm"
+                    >
+                        <Link href={`/signup?returnUrl=${encodeURIComponent(pathname)}`}>
+                        Sign up <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                    </Button>
+                    <Button
+                        asChild
+                        variant="ghost"
+                        className="h-[3.625rem] border border-gray-300 px-[1.5rem] py-[1.0625rem] text-[1rem] font-medium text-[#070750] hover:bg-gray-50 rounded-[0.5rem]"
+                    >
+                        <Link href={`/login?returnUrl=${encodeURIComponent(pathname)}`}>
+                        Log in
+                        </Link>
+                    </Button>
+                </div>
+              )}
+            </div>
 
             {/* Mobile Menu Trigger */}
             <Sheet open={open} onOpenChange={setOpen}>
@@ -85,7 +139,7 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="md:hidden"
+                  className="xl:hidden"
                 >
                   <Menu className="h-6 w-6" />
                   <span className="sr-only">Open menu</span>
