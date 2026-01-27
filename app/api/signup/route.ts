@@ -12,18 +12,30 @@ export async function POST(req: Request) {
       );
     }
 
-    // Proof API is hit
-    console.log("Signup API hit:", {
-      fullName,
-      email,
-      password,
-    });
+    const request = await fetch(`http://localhost:3000/api/send-otp`,{
+      method : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    })
+  console.log(request)
+    const response = await request.json()
 
-    return NextResponse.json(
-      { message: "Signup successful" },
-      { status: 200 }
-    );
+    if(response.success){
+      return NextResponse.json(
+        { message: "OTP sent successfully" },
+        { status: 200 }
+      );      
+    } 
+    else{
+      return NextResponse.json(
+        { message: "Error sending OTP" },
+        { status: 500 }
+      );
+    }
+
+
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { message: "Server error" },
       { status: 500 }
