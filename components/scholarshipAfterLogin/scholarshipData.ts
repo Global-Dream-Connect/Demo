@@ -1,0 +1,59 @@
+export const scholarshipsData = [
+  {
+    title: "Gates Cambridge Scholarship",
+    amount: "$95,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    location: "United Kingdom",
+  },
+  {
+    title: "Rhodes Scholarship",
+    amount: "$80,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    slots: 30,
+  },
+  {
+    title: "Fulbright Foreign Student Program",
+    amount: "$50,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    location: "United States",
+  },
+  {
+    title: "Rhodes Scholarship",
+    amount: "$80,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    slots: 30,
+  },
+  {
+    title: "Gates Cambridge Scholarship",
+    amount: "$95,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    location: "United Kingdom",
+  },
+  {
+    title: "Rhodes Scholarship",
+    amount: "$80,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    slots: 30,
+  },
+  {
+    title: "Fulbright Foreign Student Program",
+    amount: "$50,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    location: "United States",
+  },
+
+  {
+    title: "Rhodes Scholarship",
+    amount: "$80,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    slots: 30,
+  },
+];
