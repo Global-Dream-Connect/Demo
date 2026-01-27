@@ -3,8 +3,22 @@
 import { CheckCircle } from "lucide-react";
 import AuthHeader from "@/components/auth/AuthHeader";
 import SignupShell from "@/components/auth/SignupShell";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function VerifySuccessPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl") || "/";
+
+  // Auto redirect to login after 3 seconds
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      router.push(`/login?returnUrl=${encodeURIComponent(returnUrl)}`);
+    }, 3000);
+    return () => clearTimeout(timeout);
+  }, [router, returnUrl]);
+
   return (
     <div className="relative min-h-screen">
       {/* BACKGROUND PAGE (exact signup, disabled) */}

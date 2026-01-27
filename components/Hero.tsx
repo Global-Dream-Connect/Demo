@@ -54,7 +54,7 @@ export default function Hero() {
 }
 
 
-function HeroStat({number, title, color}){
+function HeroStat({ number, title, color }: { number: string; title: string; color: string }) {
   return(
     <>
       <div className={cn('w-fit h-fit flex flex-col gap-2',color)}>

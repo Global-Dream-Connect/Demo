@@ -2,19 +2,20 @@
 
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import AuthHeader from "@/components/auth/AuthHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SignupShell from "@/components/auth/SignupShell";
 
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const name = searchParams.get("name") || "there";
   const email = searchParams.get("email") || "";
+  const returnUrl = searchParams.get("returnUrl") || "/";
 
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [timer, setTimer] = useState(50);
@@ -103,7 +104,7 @@ export default function VerifyEmailPage() {
       }
 
       // ✅ Success
-      router.push("/verify-success");
+      router.push(`/verify-success?returnUrl=${encodeURIComponent(returnUrl)}`);
     } catch {
       setError("Something went wrong");
       setVerifying(false);
@@ -195,5 +196,13 @@ export default function VerifyEmailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

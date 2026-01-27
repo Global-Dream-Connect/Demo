@@ -8,9 +8,31 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, ArrowRight } from "lucide-react"
 import Header from "@/components/Header"
+import { useAuth } from "@/context/AuthContext"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const { login, isLoading, error } = useAuth()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const returnUrl = searchParams.get('returnUrl') || "/"
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please enter email and password")
+      return
+    }
+    
+    try {
+      await login(email, password)
+      router.push(returnUrl)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -33,6 +55,8 @@ export default function LoginPage() {
                 type="email"
                 placeholder="Enter your email address"
                 className="w-full"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -47,6 +71,8 @@ export default function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter a strong password"
                   className="w-full pr-10"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <button
                   type="button"
@@ -63,9 +89,15 @@ export default function LoginPage() {
             </div>
 
             {/* Login Button */}
-            <Button className="w-full bg-[#070750] hover:bg-[#070750]/90 text-white font-semibold py-6 rounded-md mb-6 text-base">
-              Log in to your account
+            <Button 
+              onClick={handleLogin}
+              disabled={isLoading}
+              className="w-full bg-[#070750] hover:bg-[#070750]/90 text-white font-semibold py-6 rounded-md mb-6 text-base"
+            >
+              {isLoading ? "Logging in..." : "Log in to your account"}
             </Button>
+
+            {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
             {/* Separator */}
             <div className="relative mb-6">

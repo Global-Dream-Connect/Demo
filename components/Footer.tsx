@@ -87,8 +87,7 @@ export default function Footer() {
   )
 }
 
-function Links ({link}){
-  
+function Links({ link }: { link: { link: string; href: string } }) {  
   return(
     <>
       <Link className='text-slate-100' href={link.href}>{link.link}</Link>
