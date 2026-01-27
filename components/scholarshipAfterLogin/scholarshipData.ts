@@ -35,13 +35,6 @@ export const scholarshipsData = [
     location: "United Kingdom",
   },
   {
-    title: "Fulbright Foreign Student Program",
-    amount: "$50,000",
-    tags: ["International students", "Undergraduate", "GPA 3.8+"],
-    deadline: "March 15, 2026",
-    location: "United States",
-  },
-  {
     title: "Rhodes Scholarship",
     amount: "$80,000",
     tags: ["International students", "Undergraduate", "GPA 3.8+"],
@@ -49,10 +42,18 @@ export const scholarshipsData = [
     slots: 30,
   },
   {
-    title: "Gates Cambridge Scholarship",
-    amount: "$95,000",
+    title: "Fulbright Foreign Student Program",
+    amount: "$50,000",
     tags: ["International students", "Undergraduate", "GPA 3.8+"],
     deadline: "March 15, 2026",
-    location: "United Kingdom",
+    location: "United States",
+  },
+
+  {
+    title: "Rhodes Scholarship",
+    amount: "$80,000",
+    tags: ["International students", "Undergraduate", "GPA 3.8+"],
+    deadline: "March 15, 2026",
+    slots: 30,
   },
 ];
