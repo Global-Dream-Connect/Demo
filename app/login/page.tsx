@@ -8,9 +8,83 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, ArrowRight } from "lucide-react"
 import Header from "@/components/Header"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+import { useEffect } from "react"
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const slides = [
+    {
+      image: "/Images/how-it-works.jpg",
+      title: "Great Mentorship",
+      description: "Get help from seasoned mentors to help navigate your ivy league journey."
+    },
+    {
+      image: "/Images/How I became a Rhodes Scholar.png",
+      title: "Expert Guidance",
+      description: "Find the best resources and study materials curated by top educators."
+    },
+    {
+      image: "/Images/college-students-different-ethnicities-cramming 1.png",
+      title: "Community Support",
+      description: "Join a vibrant community of learners and achieve your goals together."
+    }
+  ]
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    setCurrent(api.selectedScrollSnap())
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap())
+    })
+  }, [api])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
+    setIsLoading(true)
+
+    try {
+      // Simulate API call
+      const response = await new Promise<{ ok: boolean }>((resolve) => {
+        setTimeout(() => {
+          resolve({ ok: true })
+        }, 1000)
+      })
+
+      // In a real scenario:
+      // const response = await fetch('/api/login', { ... })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message. Please try again.')
+      }
+
+      // Success
+      console.log("Login successful")
+      // router.push('/dashboard') // Uncomment when routing is ready
+
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setError(error instanceof Error ? error.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -23,49 +97,64 @@ export default function LoginPage() {
           <div className="bg-white rounded-lg shadow-sm p-8">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">Welcome back</h2>
 
-            {/* Email Input */}
-            <div className="mb-6">
-              <Label htmlFor="email" className="text-gray-700 mb-2 block">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email address"
-                className="w-full"
-              />
-            </div>
-
-            {/* Password Input */}
-            <div className="mb-6">
-              <Label htmlFor="password" className="text-gray-700 mb-2 block">
-                Password
-              </Label>
-              <div className="relative">
+            <form onSubmit={handleSubmit}>
+              {/* Email Input */}
+              <div className="mb-6">
+                <Label htmlFor="email" className="text-gray-700 mb-2 block">
+                  Email
+                </Label>
                 <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter a strong password"
-                  className="w-full pr-10"
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email address"
+                  className="w-full"
+                  required
                 />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
-                >
-                  {showPassword ? (
-                    <EyeOff className="w-5 h-5" />
-                  ) : (
-                    <Eye className="w-5 h-5" />
-                  )}
-                </button>
               </div>
-            </div>
 
-            {/* Login Button */}
-            <Button className="w-full bg-[#070750] hover:bg-[#070750]/90 text-white font-semibold py-6 rounded-md mb-6 text-base">
-              Log in to your account
-            </Button>
+              {/* Password Input */}
+              <div className="mb-6">
+                <Label htmlFor="password" className="text-gray-700 mb-2 block">
+                  Password
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter a strong password"
+                    className="w-full pr-10"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-800"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Error Message */}
+              {error && (
+                <div className="mb-6 p-3 bg-red-50 text-red-600 text-sm rounded-md border border-red-200">
+                  {error}
+                </div>
+              )}
+
+              {/* Login Button */}
+              <Button
+                type="submit"
+                className="w-full bg-[#070750] hover:bg-[#070750]/90 text-white font-semibold py-6 rounded-md mb-6 text-base"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Log in to your account"}
+              </Button>
+            </form>
 
             {/* Separator */}
             <div className="relative mb-6">
@@ -104,28 +193,51 @@ export default function LoginPage() {
             </Button>
           </div>
 
-          {/* Right Column - Promotional Card */}
-          <div className="relative rounded-lg shadow-sm overflow-hidden bg-white">
-            <div className="relative w-full h-full min-h-[600px]">
-              <Image
-                src="/Images/college-students-different-ethnicities-cramming 1.png"
-                alt="Students collaborating"
-                fill
-                className="object-cover rounded-lg"
-                priority
-              />
+          {/* Right Column - Carousel */}
+          <div className="relative rounded-lg shadow-sm overflow-hidden bg-white h-full min-h-[600px]">
+            <Carousel
+              setApi={setApi}
+              className="w-full h-full"
+              plugins={[
+                Autoplay({
+                  delay: 5000,
+                })
+              ]}
+            >
+              <CarouselContent className="h-full ml-0">
+                {slides.map((slide, index) => (
+                  <CarouselItem key={index} className="pl-0 h-full relative">
+                    <div className="relative w-full h-full min-h-[600px]">
+                      <Image
+                        src={slide.image}
+                        alt={slide.title}
+                        fill
+                        className="object-cover rounded-lg"
+                        priority
+                      />
+                      {/* Text Overlay - Bottom Left Corner */}
+                      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/40 to-transparent p-8 pt-20 rounded-b-lg">
+                        <h3 className="text-3xl font-bold text-white mb-2">{slide.title}</h3>
+                        <p className="text-white text-base leading-relaxed max-w-md">{slide.description}</p>
 
-              {/* Text Overlay - Bottom Left Corner */}
-              <div className="absolute bottom-0 left-0 bg-black/60 p-8 rounded-br-lg">
-                <h3 className="text-3xl font-bold text-white mb-2">Great Mentorship</h3>
-                <p className="text-white text-base leading-relaxed max-w-md">Get help from seasoned mentors to help navigate your ivy league journey.</p>
-                <div className="flex gap-2 mt-6">
-                  <div className="w-40 h-2 bg-white rounded-full"></div>
-                  <div className="w-30 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
-                  <div className="w-60 h-2 bg-transparent border-2 border-gray-400 rounded-full"></div>
-                </div>
-              </div>
-            </div>
+                        {/* Progress Indicators */}
+                        <div className="flex gap-2 mt-6">
+                          {slides.map((_, i) => (
+                            <div
+                              key={i}
+                              className={`h-2 rounded-full transition-all duration-300 ${i === current
+                                ? "w-20 bg-white"
+                                : "w-20 bg-transparent border-2 border-gray-400"
+                                }`}
+                            ></div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </main>
