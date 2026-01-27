@@ -26,7 +26,7 @@ export default function RootLayout({
         className={`${poppins.className} antialiased`}
       >
         <AuthProvider>
-         <Toaster richColors position="top-center" />
+        <Toaster richColors position="top-center" />
         {children}
         </AuthProvider>
       </body>
