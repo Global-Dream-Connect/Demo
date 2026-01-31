@@ -84,8 +84,8 @@ const Resources = () => {
           
           <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 ${!isLoggedIn ? 'opacity-40 blur-[2px] pointer-events-none' : ''}`}>
             {[1, 2, 3].map((i) => (
-              <div key={i} className={`group ${!isLoggedIn && i > 1 ? 'hidden sm:block' : ''}`}>
-                <div className={`relative w-full overflow-hidden mb-5 rounded-2xl ${!isLoggedIn ? 'h-10 md:h-20' : 'h-56 md:h-64 shadow-sm'}`}>
+              <div key={i} className={`relative group ${!isLoggedIn && i > 1 ? 'hidden sm:block' : ''}`}>
+                <div className={`relative bottom-0 w-full overflow-hidden mb-5 rounded-2xl ${!isLoggedIn ? 'h-10 md:h-20' : 'h-56 md:h-64 shadow-sm'}`}>
                   <img 
                     src={i === 2 ? "/images/how-it-works.jpg" : "/images/How I became a Rhodes Scholar.png"} 
                     className="w-full h-full object-cover" 
@@ -127,7 +127,7 @@ const Resources = () => {
           </div>
 
           {!isLoggedIn && (
-            <div className="relative top-1 left-0 w-full h-[calc(100%+80px)] md:h-[calc(100%+120px)] z-20 flex flex-col justify-end">
+            <div className="relative top-26 left-0 w-full h-[calc(100%+80px)] md:h-[calc(100%+120px)] z-20 flex flex-col justify-end">
               <SignUpCTA />
             </div>
           )}
