@@ -6,27 +6,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import AuthHeader from "@/components/auth/AuthHeader";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from "@/components/ui/form";
+import { Carousel, CarouselContent, CarouselItem,} from "@/components/ui/carousel";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const schema = z.object({
   fullName: z.string().min(2, "Enter your full name"),
-  email: z.string().email("Enter a valid email"),
+  email: z.email({error:"Enter a valid email"}),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
@@ -44,32 +32,32 @@ export default function SignupPage() {
 
   
   async function onSubmit(values: z.infer<typeof schema>) {
-  try {
-    const res = await fetch("/api/signup", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+    try {
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      alert(data.message || "Signup failed");
-      return;
+      if (!res.ok) {
+        toast.error(data.message || "Signup failed. Try Again",{position:"top-center", richColors:true});
+        return;
+      }
+
+      // move to next step only after API success
+      router.push(
+        `/verify-email?name=${encodeURIComponent(
+          values.fullName
+        )}&email=${encodeURIComponent(values.email)}`
+      );
+    } catch (error) {
+      alert("Something went wrong");
     }
-
-    // move to next step only after API success
-    router.push(
-      `/verify-email?name=${encodeURIComponent(
-        values.fullName
-      )}&email=${encodeURIComponent(values.email)}`
-    );
-  } catch (error) {
-    alert("Something went wrong");
   }
-}
 
 
   return (
